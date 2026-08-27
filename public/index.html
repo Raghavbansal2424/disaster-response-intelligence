@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Operational dashboard for reporting, mapping and prioritizing disaster incidents." />
   <title>Disaster Response Intelligence</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -18,7 +20,24 @@
       <button id="openReport">+ Report Incident</button>
     </section>
 
-    <section id="stats" class="stats"></section>
+    <section id="stats" class="stats" aria-label="Operations summary"></section>
+
+    <section class="panel map-panel" aria-labelledby="mapTitle">
+      <div class="panel-head map-heading">
+        <div><p class="eyebrow">GEOGRAPHIC INTELLIGENCE</p><h2 id="mapTitle">Live Incident Map</h2></div>
+        <span id="mapStatus" class="map-status" role="status">Loading incident locations…</span>
+      </div>
+      <div class="map-frame">
+        <div id="incidentMap" aria-label="Interactive map of active emergency incidents"></div>
+        <div class="map-legend" aria-label="Map priority legend">
+          <strong>Priority</strong>
+          <span><i class="legend-dot critical-dot"></i>Critical</span>
+          <span><i class="legend-dot high-dot"></i>High</span>
+          <span><i class="legend-dot medium-dot"></i>Medium</span>
+          <span><i class="legend-dot low-dot"></i>Low</span>
+        </div>
+      </div>
+    </section>
 
     <section class="workspace">
       <div class="panel queue">
@@ -38,16 +57,23 @@
 
   <dialog id="reportDialog">
     <form id="reportForm">
-      <div class="dialog-head"><div><p class="eyebrow">NEW FIELD REPORT</p><h2>Report an incident</h2></div><button type="button" class="icon" id="closeReport">×</button></div>
+      <div class="dialog-head"><div><p class="eyebrow">NEW FIELD REPORT</p><h2>Report an incident</h2></div><button type="button" class="icon" id="closeReport" aria-label="Close report form">×</button></div>
       <label>Reporter name<input name="reporter" required placeholder="Your name or team" /></label>
       <label>Phone / contact<input name="phone" placeholder="Optional contact" /></label>
       <label>Location<input name="location" required placeholder="Area, landmark or coordinates" /></label>
+      <div class="location-actions">
+        <button type="button" class="secondary" id="useLocation">Use Current GPS</button>
+        <span id="locationStatus" role="status">Coordinates help responders locate the report.</span>
+      </div>
+      <input name="latitude" type="hidden" />
+      <input name="longitude" type="hidden" />
       <label>What happened?<textarea name="description" required rows="5" placeholder="Describe injuries, trapped people, flooding, fire, blocked access…"></textarea></label>
       <label>Estimated people affected<input name="people_affected" type="number" min="0" value="1" /></label>
       <div id="formMessage" class="form-message"></div>
-      <button type="submit">Analyze & Submit Report</button>
+      <button type="submit">Analyze &amp; Submit Report</button>
     </form>
   </dialog>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="app.js"></script>
 </body>
 </html>
