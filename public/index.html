@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disaster Response Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div><span class="brand-mark">DR</span><strong>Disaster Response Intelligence</strong></div>
+    <span class="live"><i></i> Operations Online</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">EMERGENCY OPERATIONS PLATFORM</p><h1>Turn fragmented reports into <span>actionable rescue priorities.</span></h1><p>Collect field reports, classify urgency, prioritize incidents and coordinate response from one operational dashboard.</p></div>
+      <button id="openReport">+ Report Incident</button>
+    </section>
+
+    <section id="stats" class="stats"></section>
+
+    <section class="workspace">
+      <div class="panel queue">
+        <div class="panel-head"><div><p class="eyebrow">LIVE INTELLIGENCE</p><h2>Priority Incident Queue</h2></div><button class="secondary" id="refresh">Refresh</button></div>
+        <div id="incidents" class="incident-list"><p class="muted">Loading incidents…</p></div>
+      </div>
+      <aside class="panel side">
+        <p class="eyebrow">RESPONSE FLOW</p><h2>Operational Workflow</h2>
+        <div class="flow"><b>1</b><div><strong>Report</strong><small>Citizen or responder submits emergency information.</small></div></div>
+        <div class="flow"><b>2</b><div><strong>Analyze</strong><small>System classifies the incident and calculates priority.</small></div></div>
+        <div class="flow"><b>3</b><div><strong>Dispatch</strong><small>Teams verify, dispatch resources and update status.</small></div></div>
+        <div class="flow"><b>4</b><div><strong>Resolve</strong><small>Incident is closed while preserving operational history.</small></div></div>
+        <div class="notice">Emergency systems should always include human verification before real-world dispatch decisions.</div>
+      </aside>
+    </section>
+  </main>
+
+  <dialog id="reportDialog">
+    <form id="reportForm">
+      <div class="dialog-head"><div><p class="eyebrow">NEW FIELD REPORT</p><h2>Report an incident</h2></div><button type="button" class="icon" id="closeReport">×</button></div>
+      <label>Reporter name<input name="reporter" required placeholder="Your name or team" /></label>
+      <label>Phone / contact<input name="phone" placeholder="Optional contact" /></label>
+      <label>Location<input name="location" required placeholder="Area, landmark or coordinates" /></label>
+      <label>What happened?<textarea name="description" required rows="5" placeholder="Describe injuries, trapped people, flooding, fire, blocked access…"></textarea></label>
+      <label>Estimated people affected<input name="people_affected" type="number" min="0" value="1" /></label>
+      <div id="formMessage" class="form-message"></div>
+      <button type="submit">Analyze & Submit Report</button>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
