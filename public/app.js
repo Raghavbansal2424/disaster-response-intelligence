@@ -1,4 +1,5 @@
-const localHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);\nconst API = window.location.port === '8080' ? '/api-proxy' : (localHost ? 'http://localhost:8000' : '');
+const localHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const API = window.location.port === '8080' ? '/api-proxy' : (localHost ? 'http://localhost:8000' : '');
 const $ = s => document.querySelector(s);
 const dialog = $('#reportDialog');
 
