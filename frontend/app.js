@@ -1,4 +1,4 @@
-const API = window.location.port === '8080' ? '/api-proxy' : 'http://localhost:8000';
+const localHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);\nconst API = window.location.port === '8080' ? '/api-proxy' : (localHost ? 'http://localhost:8000' : '');
 const $ = s => document.querySelector(s);
 const dialog = $('#reportDialog');
 
@@ -26,7 +26,7 @@ async function load(){
     ].map(([label,value])=>`<div class="stat"><small>${label}</small><strong>${value}</strong></div>`).join('');
     $('#incidents').innerHTML = incidents.length ? incidents.map(card).join('') : '<p class="muted">No incidents reported.</p>';
     document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>changeStatus(+b.dataset.id,b.dataset.next));
-  }catch(e){$('#incidents').innerHTML=`<p class="muted">Backend unavailable. Start the FastAPI server on port 8000.</p>`}
+  }catch(e){$('#incidents').innerHTML=`<p class="muted">The incident service is temporarily unavailable. Please refresh in a moment.</p>`}
 }
 
 function card(i){
