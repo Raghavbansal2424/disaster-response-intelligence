@@ -7,6 +7,7 @@
   <title>Disaster Response Intelligence</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dispatch.css" />
 </head>
 <body>
   <header>
@@ -35,6 +36,7 @@
           <span><i class="legend-dot high-dot"></i>High</span>
           <span><i class="legend-dot medium-dot"></i>Medium</span>
           <span><i class="legend-dot low-dot"></i>Low</span>
+          <span><i class="legend-dot station-dot"></i>Response station</span>
         </div>
       </div>
     </section>
@@ -45,12 +47,12 @@
         <div id="incidents" class="incident-list"><p class="muted">Loading incidents…</p></div>
       </div>
       <aside class="panel side">
-        <p class="eyebrow">RESPONSE FLOW</p><h2>Operational Workflow</h2>
+        <p class="eyebrow">HUMAN-CONTROLLED RESPONSE</p><h2>Nearest Help Workflow</h2>
         <div class="flow"><b>1</b><div><strong>Report</strong><small>Citizen or responder submits emergency information.</small></div></div>
-        <div class="flow"><b>2</b><div><strong>Analyze</strong><small>System classifies the incident and calculates priority.</small></div></div>
-        <div class="flow"><b>3</b><div><strong>Dispatch</strong><small>Teams verify, dispatch resources and update status.</small></div></div>
-        <div class="flow"><b>4</b><div><strong>Resolve</strong><small>Incident is closed while preserving operational history.</small></div></div>
-        <div class="notice">Emergency systems should always include human verification before real-world dispatch decisions.</div>
+        <div class="flow"><b>2</b><div><strong>Match</strong><small>The system ranks available stations by service capability, distance and ETA.</small></div></div>
+        <div class="flow"><b>3</b><div><strong>Verify</strong><small>A dispatcher confirms the incident and chooses the response unit.</small></div></div>
+        <div class="flow"><b>4</b><div><strong>Send</strong><small>The approved request is sent through the configured agency gateway.</small></div></div>
+        <div class="notice"><strong>Safety control:</strong> recommendations never dispatch a team automatically. Human verification is required before a request can leave the system.</div>
       </aside>
     </section>
   </main>
@@ -73,6 +75,23 @@
       <button type="submit">Analyze &amp; Submit Report</button>
     </form>
   </dialog>
+
+  <dialog id="dispatchDialog">
+    <form id="dispatchForm">
+      <div class="dialog-head"><div><p class="eyebrow">RESPONSE COORDINATION</p><h2>Request nearest emergency help</h2></div><button type="button" class="icon" id="closeDispatch" aria-label="Close dispatch form">×</button></div>
+      <div class="dispatch-notice"><strong>Dispatcher approval required.</strong> The system recommends nearby units but does not make the operational decision.</div>
+      <div id="dispatchIncidentSummary" class="dispatch-summary"></div>
+      <div class="recommendation-heading"><strong>Recommended response stations</strong><span>Nearest capable units first</span></div>
+      <div id="dispatchRecommendations" class="recommendations"><p class="muted">Finding available units…</p></div>
+      <label>Dispatcher / coordinator name<input name="confirmed_by" required placeholder="Name of person authorizing this request" /></label>
+      <label>Dispatch note<textarea name="notes" rows="2" placeholder="Access route, hazards or other instructions (optional)"></textarea></label>
+      <label class="confirm-check"><input name="human_verified" type="checkbox" required /><span>I have verified this incident and authorize sending this request to the selected station.</span></label>
+      <div id="dispatchMessage" class="dispatch-result" role="status"></div>
+      <button id="sendDispatch" type="submit">Confirm &amp; Send Request</button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="app.js"></script>
 </body>
